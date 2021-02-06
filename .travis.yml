@@ -1,0 +1,26 @@
+# see http://about.travis-ci.org/docs/user/languages/python/ for more hints
+dist: trusty
+language: python
+sudo: required 
+
+python:
+  # using major version aliases
+  - "3.4"
+  - "3.5"
+
+script: "python3 -m pytest ./test/test_QuarterlyReport.py ./test/test_TakeStock_Reporter.py"
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -y install python3-pip
+  - sudo apt-get -y install python3-pyqt4
+  
+install:
+  - pip3 install pytest-cov
+  - pip3 install codecov
+  - pip3 install -r dev_requirements.txt
+
+# Need to discover reason for PyQt4 not importing before running coverage
+#after_success:
+#  - python3 -m pytest --cov ./src
+#  - codecov -t db9d21de-595d-4797-b4df-cdf32854c3dd
